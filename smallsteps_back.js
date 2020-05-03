@@ -102,6 +102,27 @@ app.post("/timeTarget", function (req, res) {
   });
 });
 
+//登录
+app.post("/login", function (req, res) {
+  let sql =
+    "select * from userInfo where name = '" +
+    req.body.name +
+    "' and pwd = '" +
+    req.body.pwd+"'";
+  setMysql(sql, function (result) {
+    let data = null
+    if(result.length ==0){
+      data = "error"
+    }
+    else{
+      data = {}
+      data.id = result[0].id
+      data.name = result[0].name
+    }
+    res.send(data);
+  });
+});
+
 //监听端口
 var server = app.listen(7001, function () {});
 
